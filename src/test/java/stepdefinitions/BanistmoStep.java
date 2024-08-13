@@ -1,13 +1,20 @@
+package stepdefinitions;
 
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import net.serenitybdd.screenplay.actors.OnStage;
 import net.thucydides.core.annotations.Managed;
 import org.openqa.selenium.WebDriver;
+import prueba.banistmo.questions.IsElementVisible;
 import prueba.banistmo.tasks.*;
+import prueba.banistmo.userinterfaces.CheckoutConfirmationPage;
+
+import static org.hamcrest.Matchers.is;
 
 public class BanistmoStep {
 
@@ -48,6 +55,10 @@ public class BanistmoStep {
 
 	@Then("el usuario debería ver la pantalla de confirmación de compra")
 	public void elUsuarioDeberiaVerLaPantallaDeConfirmacionDeCompra() {
-		//user.attemptsTo(Ensure.that(CheckoutConfirmationPage.CONFIRMATION_MESSAGE).isDisplayed());
+		OnStage.theActorInTheSpotlight().should(
+				GivenWhenThen.seeThat("El mensaje de confirmación está visible",
+						IsElementVisible.forTarget(CheckoutConfirmationPage.CONFIRMATION_MESSAGE),
+						is(true))
+		);
 	}
 }
