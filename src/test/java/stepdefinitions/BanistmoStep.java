@@ -33,7 +33,7 @@ public class BanistmoStep {
 		user.attemptsTo(OpenApp.open());
 	}
 
-	@When("el usuario inicia sesión con usuario {string} y contraseña {string}")
+	@When("^el usuario inicia sesión con usuario \"([^\"]*)\" y contraseña \"([^\"]*)\"$")
 	public void elUsuarioIniciaSesion(String username, String password) {
 		user.attemptsTo(Login.withCredentials(username, password));
 	}
@@ -48,7 +48,7 @@ public class BanistmoStep {
 		user.attemptsTo(ProceedToCheckout.now());
 	}
 
-	@When("el usuario ingresa la información de pago con nombre {string}, apellido {string}, y código postal {string}")
+	@When("^el usuario ingresa la información de pago con nombre \"([^\"]*)\", apellido \"([^\"]*)\", y código postal \"([^\"]*)\"$")
 	public void elUsuarioIngresaInformacionDePago(String firstName, String lastName, String postalCode) {
 		user.attemptsTo(EnterPaymentInformation.withDetails(firstName, lastName, postalCode));
 	}
