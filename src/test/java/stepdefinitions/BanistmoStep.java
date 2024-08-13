@@ -31,6 +31,7 @@ public class BanistmoStep {
 	public void setUp() throws MalformedURLException {
 		driver = AppiumSetup.initializeDriver();
 		// Configura la escena de actores
+		System.out.println(driver);
 		OnStage.setTheStage(Cast.ofStandardActors());
 		// Configura el actor 'user' para que pueda navegar por la web
 		user.can(BrowseTheWeb.with(driver));

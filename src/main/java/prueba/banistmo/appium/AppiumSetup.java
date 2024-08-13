@@ -17,7 +17,7 @@ public class AppiumSetup {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         Properties properties = new Properties();
-        try (InputStream input = AppiumSetup.class.getClassLoader().getResourceAsStream("serenity.properties")) {
+        try (InputStream input = AppiumSetup.class.getClassLoader().getResourceAsStream("serenity.conf")) {
             if (input == null) {
                 System.out.println("Sorry, unable to find serenity.properties");
                 return null;
