@@ -1,8 +1,10 @@
 package prueba.banistmo.tasks;
 
+import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Scroll;
+import prueba.banistmo.userinterfaces.InventoryPage;
 
 public class AddRedShirtToCart implements Task {
 	public static AddRedShirtToCart add() {
