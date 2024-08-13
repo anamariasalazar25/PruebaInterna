@@ -3,6 +3,7 @@ package prueba.banistmo.questions;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.targets.Target;
+import org.openqa.selenium.WebElement;
 
 public class IsElementVisible implements Question<Boolean> {
 	private final Target target;
@@ -17,7 +18,8 @@ public class IsElementVisible implements Question<Boolean> {
 
 	@Override
 	public Boolean answeredBy(Actor actor) {
-		return target.resolveFor(actor).isDisplayed();
+		WebElement element = target.resolveFor(actor);
+		return element.isDisplayed();
 	}
 }
 
