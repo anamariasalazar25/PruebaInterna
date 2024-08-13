@@ -44,4 +44,6 @@ dependencies {
 	implementation "net.serenity-bdd:serenity-single-page-report:${serenity_version}"
 	implementation "com.sikulix:sikulixapi:2.0.4"
 	implementation 'io.appium:java-client:8.3.0'
+	implementation 'org.slf4j:slf4j-api:1.7.36'
+	implementation 'ch.qos.logback:logback-classic:1.2.10'
 }

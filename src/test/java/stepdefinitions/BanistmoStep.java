@@ -7,12 +7,16 @@ import cucumber.api.java.en.When;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import net.serenitybdd.screenplay.actors.Cast;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.thucydides.core.annotations.Managed;
 import org.openqa.selenium.WebDriver;
+import prueba.banistmo.appium.AppiumSetup;
 import prueba.banistmo.questions.IsElementVisible;
 import prueba.banistmo.tasks.*;
 import prueba.banistmo.userinterfaces.CheckoutConfirmationPage;
+
+import java.net.MalformedURLException;
 
 import static org.hamcrest.Matchers.is;
 
@@ -24,8 +28,14 @@ public class BanistmoStep {
 	private Actor user = Actor.named("User");
 
 	@Before
-	public void setUp() {
+	public void setUp() throws MalformedURLException {
+		driver = AppiumSetup.initializeDriver();
+		// Configura la escena de actores
+		OnStage.setTheStage(Cast.ofStandardActors());
+		// Configura el actor 'user' para que pueda navegar por la web
 		user.can(BrowseTheWeb.with(driver));
+		// Agrega al actor 'user' al escenario de OnStage
+		OnStage.theActorCalled("User").can(BrowseTheWeb.with(driver));
 	}
 
 	@Given("el usuario está en la pantalla de inicio de sesión")
