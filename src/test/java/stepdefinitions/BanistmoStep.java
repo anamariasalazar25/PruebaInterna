@@ -4,6 +4,8 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -23,7 +25,7 @@ import static org.hamcrest.Matchers.is;
 public class BanistmoStep {
 
 	@Managed(driver = "appium")
-	WebDriver driver;
+	AppiumDriver<MobileElement> driver;
 
 	private Actor user = Actor.named("User");
 
@@ -31,7 +33,6 @@ public class BanistmoStep {
 	public void setUp() throws MalformedURLException {
 		driver = AppiumSetup.initializeDriver();
 		// Configura la escena de actores
-		System.out.println(driver);
 		OnStage.setTheStage(Cast.ofStandardActors());
 		// Configura el actor 'user' para que pueda navegar por la web
 		user.can(BrowseTheWeb.with(driver));
@@ -41,12 +42,12 @@ public class BanistmoStep {
 
 	@Given("el usuario está en la pantalla de inicio de sesión")
 	public void elUsuarioEstaEnLaPantallaDeInicioDeSesion() {
-		user.attemptsTo(OpenApp.open());
+		user.attemptsTo(OpenApp.open(driver));
 	}
 
 	@When("^el usuario inicia sesión con usuario \"([^\"]*)\" y contraseña \"([^\"]*)\"$")
-	public void elUsuarioIniciaSesion(String username, String password) {
-		user.attemptsTo(Login.withCredentials(username, password));
+	public void elUsuarioIniciaSesionConCredencialesPredeterminadas() {
+		user.attemptsTo(Login.withCredentials("standard_user", "secret_sauce"));
 	}
 
 	@When("el usuario añade una camisa roja al carrito")
