@@ -5,10 +5,10 @@ import org.openqa.selenium.By;
 
 public class LoginPage {
 	public static final Target USERNAME_FIELD = Target.the("username field")
-			.located(By.id("username"));
+			.located(By.xpath("//*[@content-desc='test-Username']"));
 	public static final Target PASSWORD_FIELD = Target.the("password field")
-			.located(By.id("password"));
+			.located(By.xpath("//*[@content-desc='test-Password']"));
 	public static final Target LOGIN_BUTTON = Target.the("login button")
-			.located(By.id("login-button"));
+			.located(By.xpath("//*[@content-desc='test-LOGIN']"));
 }
 

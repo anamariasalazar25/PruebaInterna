@@ -1,25 +1,56 @@
 package prueba.banistmo.tasks;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
+import io.appium.java_client.remote.MobileCapabilityType;
+import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.actions.Open;
+import org.slf4j.Logger;
+import prueba.banistmo.appium.AppiumSetup;
+import prueba.banistmo.util.TestUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class OpenApp implements Task {
-	public static OpenApp open( AppiumDriver<MobileElement>  driver) {
-		MobileElement loginScreenElement = driver.findElementById("com.swaglabsmobileapp:id/test-Login");
-		if (loginScreenElement == null) {
-			throw new IllegalStateException("No se ha podido encontrar la pantalla de inicio de sesión.");
+
+	private AppiumDriver<?> driver;
+	private Properties config;
+
+	public OpenApp(AppiumDriver<?> driver) {
+		this.driver = driver;
+		config= new Properties();
+		try (InputStream input = AppiumSetup.class.getClassLoader().getResourceAsStream("appium.properties")) {
+			if (input == null) {
+				System.out.println("Sorry, unable to find serenity.properties");
+				return;
+			}
+			config.load(input);
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
-		return new OpenApp();
+
+	}
+
+	public static OpenApp open(AppiumDriver<?> driver) {
+		return new OpenApp(driver);
 	}
 
 	@Override
-	public <T extends Actor> void performAs(T actor) {
-		// Aquí abres la aplicación inicial (puede ser mediante una URL o actividad de la app)
-		// actor.attemptsTo(Open.url("app://your_app_package_name"));
-
+	public void performAs(Actor actor) {
+		if(config!=null){
+			String appium = config.getProperty("appium[appPackage]");
+			String appPackage = config.getProperty("appium.appPackage");
+			String appActivity = config.getProperty("appium.appActivity");
+			System.out.println(appPackage +" "+ appActivity);
+			if (appPackage == null || appActivity == null) {
+				throw new RuntimeException("appPackage or appActivity property not found in serenity.conf");
+			}
+		}else {
+			throw new RuntimeException("appPackage or appActivity property not found in serenity.conf");
+		}
 	}
 }
-

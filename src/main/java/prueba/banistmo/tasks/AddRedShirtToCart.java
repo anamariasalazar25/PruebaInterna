@@ -15,7 +15,7 @@ public class AddRedShirtToCart implements Task {
 	public <T extends Actor> void performAs(T actor) {
 		actor.attemptsTo(
 				Scroll.to(InventoryPage.RED_SHIRT),
-				Click.on(InventoryPage.ADD_TO_CART_BUTTON.of("Red Shirt"))
+				Click.on(InventoryPage.ADD_TO_CART_BUTTON)
 		);
 	}
 }

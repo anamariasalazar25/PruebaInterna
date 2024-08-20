@@ -17,7 +17,7 @@ public class AppiumSetup {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         Properties properties = new Properties();
-        try (InputStream input = AppiumSetup.class.getClassLoader().getResourceAsStream("serenity.conf")) {
+        try (InputStream input = AppiumSetup.class.getClassLoader().getResourceAsStream("appium.properties")) {
             if (input == null) {
                 System.out.println("Sorry, unable to find serenity.properties");
                 return null;
@@ -26,13 +26,13 @@ public class AppiumSetup {
             capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, properties.getProperty("appium.platformName"));
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, properties.getProperty("appium.deviceName"));
             capabilities.setCapability(MobileCapabilityType.APP, properties.getProperty("appium.app"));
-            capabilities.setCapability("app","D:\\Android.SauceLabs.Mobile.Sample.app.2.7.1.apk");
+            capabilities.setCapability("app","J:\\Android.SauceLabs.Mobile.Sample.app.2.7.1.apk");
             capabilities.setCapability("automationName", "UiAutomator2");
-            capabilities.setCapability("avd","Samsung_API_35");
+            capabilities.setCapability("avd","SamsungAPI35");
             capabilities.setCapability("appPackage", "com.swaglabsmobileapp");
             capabilities.setCapability("appActivity", "com.swaglabsmobileapp.SplashActivity");
             capabilities.setCapability("adbExecTimeout", 3000000);
-            //capabilities.setCapability("uiautomator2ServerLaunchTimeout", 300000);
+//            capabilities.setCapability("uiautomator2ServerLaunchTimeout", 300000);
             capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 600000);
         } catch (IOException ex) {
             ex.printStackTrace();
