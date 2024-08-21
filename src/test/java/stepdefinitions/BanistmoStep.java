@@ -6,7 +6,8 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.Performable;
@@ -20,6 +21,7 @@ import prueba.banistmo.questions.IsElementVisible;
 import prueba.banistmo.tasks.*;
 import prueba.banistmo.userinterfaces.CheckoutConfirmationPage;
 import prueba.banistmo.userinterfaces.LoginPage;
+import prueba.banistmo.util.AndroidDriverAbility;
 import prueba.banistmo.util.CheckVisibility;
 
 import java.net.MalformedURLException;
@@ -36,11 +38,9 @@ public class BanistmoStep {
 	@Before
 	public void setUp() throws MalformedURLException {
 		driver = AppiumSetup.initializeDriver();
-		// Configura la escena de actores
 		OnStage.setTheStage(Cast.ofStandardActors());
-		// Configura el actor 'user' para que pueda navegar por la web
-		user.can(BrowseTheWeb.with(driver));
-		// Agrega al actor 'user' al escenario de OnStage
+		user = OnStage.theActorCalled("User");
+		user.can(AndroidDriverAbility.withDriver((AndroidDriver<AndroidElement>) driver));
 		OnStage.theActorCalled("User").can(BrowseTheWeb.with(driver));
 	}
 
@@ -67,9 +67,6 @@ public class BanistmoStep {
 
 	@And("el usuario procede al checkout")
 	public void elUsuarioProcedeAlCheckout() {
-		driver.findElement(new MobileBy.ByAndroidUIAutomator(
-				"new UiScrollable(new UiSelector()" + ".scrollable(true)).scrollIntoView("
-						+ "new UiSelector().description(\"Text.allTheThingds()\"));"));
 		user.attemptsTo(ProceedToCheckout.now());
 	}
 

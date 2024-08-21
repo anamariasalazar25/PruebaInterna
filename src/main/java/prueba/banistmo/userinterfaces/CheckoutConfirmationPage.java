@@ -5,6 +5,6 @@ import org.openqa.selenium.By;
 
 public class CheckoutConfirmationPage {
 	public static final Target CONFIRMATION_MESSAGE = Target.the("confirmation message")
-			.located(By.xpath("//android.widget.TextView[@text='Thank you for your order!']"));
+			.located(By.xpath("//android.widget.TextView[@text=\"CHECKOUT: OVERVIEW\"]\n"));
 }
 

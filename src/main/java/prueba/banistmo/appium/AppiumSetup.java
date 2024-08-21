@@ -15,7 +15,7 @@ public class AppiumSetup {
 
     public static AppiumDriver initializeDriver() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-
+        String serverUrl="";
         Properties properties = new Properties();
         try (InputStream input = AppiumSetup.class.getClassLoader().getResourceAsStream("appium.properties")) {
             if (input == null) {
@@ -26,18 +26,18 @@ public class AppiumSetup {
             capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, properties.getProperty("appium.platformName"));
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, properties.getProperty("appium.deviceName"));
             capabilities.setCapability(MobileCapabilityType.APP, properties.getProperty("appium.app"));
-            capabilities.setCapability("app","J:\\Android.SauceLabs.Mobile.Sample.app.2.7.1.apk");
-            capabilities.setCapability("automationName", "UiAutomator2");
-            capabilities.setCapability("avd","SamsungAPI35");
-            capabilities.setCapability("appPackage", "com.swaglabsmobileapp");
-            capabilities.setCapability("appActivity", "com.swaglabsmobileapp.SplashActivity");
+            capabilities.setCapability("automationName", properties.getProperty("appium.automationName"));
+            capabilities.setCapability("avd",properties.getProperty("appium.avd"));
+            capabilities.setCapability("appPackage", properties.getProperty("appium.appPackage"));
+            capabilities.setCapability("appActivity", properties.getProperty("appium.appActivity"));
             capabilities.setCapability("adbExecTimeout", 3000000);
-//            capabilities.setCapability("uiautomator2ServerLaunchTimeout", 300000);
             capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 600000);
+
+            serverUrl = properties.getProperty("appium.server.url");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        return new AndroidDriver(new URL("http://127.0.0.1:4723/"), capabilities);
+        return new AndroidDriver(new URL(serverUrl), capabilities);
     }
 }
